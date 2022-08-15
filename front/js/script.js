@@ -16,29 +16,30 @@ fetch(url)
 })
 function addProducts(product)
 {
-    console.log(product)
+   
     product.forEach((kanap) => {
       
         
   
-const { id, imageUrl, altTxt, name, description } = kanap
-const elementA = makeElement(id)
+const { _id, imageUrl, altTxt, name, description } = kanap
+const elementA = makeElement(_id)
 const article = document.createElement("article")
 const image = makeImage(imageUrl, altTxt)
 const h3 = makeH3 (name)
 const p = makeParagraphe (description)
-appendElementsToArticle(article, image, h3, p)
-appendArticleToElementA(elementA, article)
+appendElementsToArticle(article, [image, h3, p])
+appendArticleToElementA(elementA,article)
 })
 }
-function appendElementsToArticle (article, image, h3, p){
-    article.appendChild(image)
-    article.appendChild(h3)
-    article.appendChild(p)
+function appendElementsToArticle (article,array){
+    
+        array.forEach((item) => {
+          article.appendChild(item)
+        })
 }
 function makeElement(id){
     const elementA = document.createElement("a")
-    elementA.href = "./product.html?id=+id"
+    elementA.href = "./product.html?id=" +id
     return elementA
 }
 
@@ -47,7 +48,7 @@ function makeElement(id){
     const items = document.querySelector("#items")
     if (items != null){
         items.appendChild(elementA)
-        items.appendChild(article)
+        elementA.appendChild(article)
         console.log("element ajoute a items" ,items)
         }
  }
