@@ -1,6 +1,10 @@
 const queryString = window.location.search
 const urlParams =  new URLSearchParams(queryString)
 const id = urlParams.get("id")
+if (id != null) {
+    let itemPrice = 0
+    let imgUrl, altText
+}
 
 fetch(`http://localhost:3000/api/products/${id}`)
 .then((response)=>response.json())
@@ -9,6 +13,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
 function handleData(kanap){
     console.log({kanap})
     const { altTxt, colors, description, imageUrl, name, price} = kanap
+  itemPrice = price
+    imgUrl = imageUrl
+    altText = altTxt 
     makeImage(imageUrl, altTxt)
     makeTitle(name)
     makePrice(price)
@@ -51,4 +58,25 @@ function makeColors(colors)
    select.appendChild(option)
 })
 }
+}
+const button = document.querySelector("#addToCart")
+if (button != null){
+button.addEventListener("click",(e)=>{
+const color = document.querySelector("#colors").value
+const quantity = document.querySelector("#quantity").value
+if (color == null || quantity == null || color === '' || quantity == 0){
+    alert("Please select a color and quantity")
+}
+const data = {
+    id: id,
+    color: color,
+    quantity: quantity,
+    price: itemPrice,
+   imageUrl: imgUrl,
+    altTxt: altText
+}
+localStorage.setItem(id,JSON.stringify(data))
+window.location.href = "cart.html"
+})
+
 }
